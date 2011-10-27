@@ -11,7 +11,7 @@
 
 /*
  * -----------------------------------------------------------------------------
- * Defining main variables 
+ * Defining main variables
  * -----------------------------------------------------------------------------
 */
 	var prevstate = 0,
@@ -39,9 +39,9 @@
 
 	play.addEventListener('click', function() // Audio state
 	{
-		bg.resumeAudio();	
+		bg.resumeAudio();
 	}, false);
-	
+
 	replaybtn.addEventListener('click', function() // Audio state
 	{
 		bg.replayAudio();
@@ -51,30 +51,30 @@
 	{
 		onClick(false);
 	}, false);
-	
+
 	error.addEventListener('click', function()
 	{
-		// goes to Google TTS API and check if human confirmation is required 
+		// goes to Google TTS API and check if human confirmation is required
 		chrome.tabs.create({url: 'http://goo.gl/OOVgp'});
 	}, false);
-	
+
 	donate.addEventListener('click', function()
 	{
 		// redirect's to paypal donation page all donations are welcomed :) :)
-		chrome.tabs.create({url: 'http://goo.gl/zACwV'});		
+		chrome.tabs.create({url: 'http://goo.gl/zACwV'});
 	});
-	
+
 /*
  * -----------------------------------------------------------------------------
  * Manipulating onClick button event
  * -----------------------------------------------------------------------------
 */
-function onClick(replay) 
+function onClick(replay)
 {
 	var zen = document.getElementById("zen");
 	var circle = document.getElementById("circle");
 	var playbtn = document.getElementById("play");
-	
+
 	if(replay)
 	{
 		replaybtn.style.display = "block";
@@ -87,14 +87,14 @@ function onClick(replay)
 	{
 		playbtn.style.display = "block";
 		replaybtn.style.display = "none";
-		
+
 		if(status != "play")
 		{
 			status = "play";
 			circle.className = "circle rotate";
 			zen.className = "play";
 		}
-		else 
+		else
 		{
 			circle.className = "circle"
 			zen.className = "";
@@ -109,7 +109,7 @@ function onClick(replay)
  * Functions for controlling audio
  * -----------------------------------------------------------------------------
 */
-function displayProgress(seconds) 
+function displayProgress(seconds)
 {
 	prevstate++;
 	progress.style['-webkit-transition-duration'] = seconds+'s';
@@ -149,12 +149,12 @@ function drawVolume(volume)
 	var context = canvas.getContext('2d');
 	var canvas_size = [canvas.width, canvas.height];
 	var center = [canvas_size[0]/2, canvas_size[1]/2];
-	
+
 	context.beginPath();
 	context.moveTo(center[0], center[1]); // center of the pie
-	
+
 	context.arc // draw volume
-	(  
+	(
 		center[0],
 		center[1],
 		radius,
@@ -181,16 +181,16 @@ function calculateVolume(x,y)
 {
 	x = x-(window.innerWidth/2);
 	y = (y-75)*-1;
-	
+
 	radius = Math.sqrt((x*x )+(y*y));
-	
+
 	if(x > 0 && y >= 0) // detecting angle quadrand
 	{
-		angle = Math.asin(Math.abs(y)/radius)*(180/Math.PI);		
+		angle = Math.asin(Math.abs(y)/radius)*(180/Math.PI);
 	}
 	else if(x < 0 && y >= 0)
 	{
-		angle = 180-(Math.asin(Math.abs(y)/radius)*(180/Math.PI));		
+		angle = 180-(Math.asin(Math.abs(y)/radius)*(180/Math.PI));
 	}
 	else if(x <= 0 && y < 0)
 	{
@@ -214,7 +214,7 @@ function showDonations()
 {
 	if(options.donate)
 	{
-		donate.style.display = "block";		
+		donate.style.display = "block";
 	}
 }
 

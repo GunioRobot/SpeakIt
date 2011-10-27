@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * Functions for animating SpeakIt icon and displaying number of sentences
  * -----------------------------------------------------------------------------
-*/	
+*/
 var animationFrames = 36;
 var animationSpeed = 10; // ms
 var icon;
@@ -17,7 +17,7 @@ function ease(x)
 	return (1-Math.sin(Math.PI/2+x*Math.PI))/2;
 }
 
-function drawIconAtRotation() 
+function drawIconAtRotation()
 {
 	iconContext.save();
 	iconContext.clearRect(0, 0, icon.width, icon.height);
@@ -42,7 +42,7 @@ function animateFlip()
 	if (rotation <= 1)
 	{
 		setTimeout("animateFlip()", animationSpeed);
-	} 
+	}
 }
 
 function updateNumber(number)

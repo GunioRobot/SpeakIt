@@ -1,7 +1,7 @@
 /*
  * SpeakIt Core
  *
- * This file contains SpeakIt core functions 
+ * This file contains SpeakIt core functions
  *
  * @package		SpeakIt
  * @category	Core
@@ -42,7 +42,7 @@
 			rate: 1.0,
 			pitch: 1.0,
 			enqueue: false,
-			context: true,			
+			context: true,
 			donate : true,
 			speechinput : false,
 			hotkeys:"ctrl + shift + 83" // Ctrl+Shift+S default kb shortcut
@@ -64,11 +64,11 @@
  * This function is called onload in the popup code
  * -----------------------------------------------------------------------------
 */
-function getSelection() 
+function getSelection()
 {
-	// Injects the content script into the current page 
+	// Injects the content script into the current page
     chrome.tabs.executeScript(null, { file: "js/get_selection.js" });
-}; 
+};
 
 /*
  * -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ function playAudio(channel,data,first,firstdata)
 */
 function preloadAudio(channel,data)
 {
-	if(data.search(/&q=undefined/i) == -1) // removing undefined bug :) 
+	if(data.search(/&q=undefined/i) == -1) // removing undefined bug :)
 	{
 		if(debug) console.log('Preloading audio in channel: '+channel);
 		datastack[channel] = data;
@@ -128,11 +128,11 @@ function resumeAudio() // resume paused audio
 	options = JSON.parse(localStorage.getItem("options")); //must fix!
 	if(options.voice == 'SpeakIt!')
 	{
-		if(audio[current] !== undefined) // stupid bug but i'll fix that :) 
+		if(audio[current] !== undefined) // stupid bug but i'll fix that :)
 		{
 			state = false;
 			audio[current].play(); // resume paused audio channel
-			if(debug) console.log('Audio channel: '+current+' was resumed.');		
+			if(debug) console.log('Audio channel: '+current+' was resumed.');
 		}
 	}
 	else
@@ -184,7 +184,7 @@ function showReplay() // shows replay button in popup.html
 	{
 		var popup = popups[0];
 		popup.showReplay();
-	}	
+	}
 }
 
 function sendDuration(channel) // Send audio duration to popup.html
@@ -247,7 +247,7 @@ function readingProblems() // displays reading problems notification in popup
 	{
 		var popup = popups[0];
 		popup.showError();
-	}	
+	}
 }
 
 /*
@@ -279,7 +279,7 @@ function contexMenu(selection)
 */
 if(options.context)
 {
-	chrome.contextMenus.create({"title": "SpeakIt!", "contexts":["selection"],"onclick": contexMenu});	
+	chrome.contextMenus.create({"title": "SpeakIt!", "contexts":["selection"],"onclick": contexMenu});
 }
 
 /*
@@ -287,19 +287,19 @@ if(options.context)
  * Perform the callback when a request is received from the content script
  * -----------------------------------------------------------------------------
 */
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) 
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse)
 {
 	options = JSON.parse(localStorage.getItem("options")); // must fix
 	if(request.method === undefined)
 	{
 		text = filterText(request.text); // get selected and formated text
-		if(text.length && text[0] != '' && state) 
+		if(text.length && text[0] != '' && state)
 		{
 			//console.log(request.text);
 			if(options.voice == 'SpeakIt!')
 			{
 				nowPlaying();
-				speakIt(text);				
+				speakIt(text);
 			}
 			else
 			{
@@ -316,7 +316,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse)
 
 /*
  * -----------------------------------------------------------------------------
- * SpeakIt core function - Use It Wisely :) :) 
+ * SpeakIt core function - Use It Wisely :) :)
  * -----------------------------------------------------------------------------
 */
 function speakIt(text)
@@ -331,13 +331,13 @@ function speakIt(text)
 			lang = result.language;
 			url = gt+lang+'&q='; // assemble full TTS url
 			words = text.length;
-			
+
 			audio = new Array();
 			audio[0] = new Audio(); // defining two new audo objects each time
 			audio[1] = new Audio();
-			
+
 			playAudio(i,url+text[i+1],1,url+text[i]); // Start first audio
-			
+
 			//Audio event listeners
 			audio[0].addEventListener("ended", function()
 			{
@@ -351,8 +351,8 @@ function speakIt(text)
 					showReplay();
 				}
 			}, true);
-			
-			audio[1].addEventListener("ended", function() 
+
+			audio[1].addEventListener("ended", function()
 			{
 				++i;
 				if(i < text.length)
@@ -364,36 +364,36 @@ function speakIt(text)
 					showReplay();
 				}
 			}, true);
-			
+
 			//Send audio duration when audio start to playing
-			audio[0].addEventListener("playing", function() 
+			audio[0].addEventListener("playing", function()
 			{
 				sendDuration(0);
 			});
-			audio[1].addEventListener("playing", function() 
+			audio[1].addEventListener("playing", function()
 			{
 				sendDuration(1);
 			});
-			
+
 			//On audio load error caused by Google bot protection
-			audio[0].addEventListener("error", function() 
+			audio[0].addEventListener("error", function()
 			{
 				handleError(0);
-			});	
-			audio[1].addEventListener("error", function() 
+			});
+			audio[1].addEventListener("error", function()
 			{
 				handleError(1);
 			});
-			
+
 			//On audio load error caused by Google bot protection
-			audio[0].addEventListener("staled", function() 
+			audio[0].addEventListener("staled", function()
 			{
 				handleError(0);
-			});	
-			audio[1].addEventListener("staled", function() 
+			});
+			audio[1].addEventListener("staled", function()
 			{
 				handleError(1);
-			});	
+			});
 		}
 		else
 		{
@@ -406,16 +406,16 @@ function speakIt(text)
  * -----------------------------------------------------------------------------
  *  Speak with new TTS Chrome API
  * -----------------------------------------------------------------------------
-*/	
+*/
 function TTS_Speak(utterance,rp_state)
 {
 	options = JSON.parse(localStorage.getItem("options"));
-	
+
 	console.log(utterance);
-	
+
 	if(rp_state)
 	{
-		nowPlaying();	
+		nowPlaying();
 	}
 
 	state = false;
@@ -428,7 +428,7 @@ function TTS_Speak(utterance,rp_state)
 		    rate: parseFloat(options.rate),
 			pitch: parseFloat(options.pitch),
 			volume: parseFloat(options.volume),
-			
+
 			onEvent: function(event)
 			{
 				if(debug) console.log('Event '+event.type+' at position '+event.charIndex);
@@ -436,9 +436,9 @@ function TTS_Speak(utterance,rp_state)
 				{
 					showReplay();
 				}
-			}						
+			}
 		}
-	);	
+	);
 }
 
 /*
@@ -446,24 +446,24 @@ function TTS_Speak(utterance,rp_state)
  *  Function for filtering text from "bad" characters and preppare text
  *  for Google Text to Speech API
  * -----------------------------------------------------------------------------
-*/	
+*/
 function filterText(text)
 {
 	var str = [],
 		maxlength = 70, // Max length of one sentence this is Google's fault :)
 		badchars = ["+","#","@","-","<",">","\n","!","?",":","&",'"',"  "],
 		replaces = ["+plus+","+sharp+","+at+","","","","",".",".",".","+and+","+quotes.+"," "];
-	
+
 	for(var i in badchars) // replacing bad chars
 	{
-		text = text.split(badchars[i]).join(replaces[i]);		
+		text = text.split(badchars[i]).join(replaces[i]);
 	}
 
 	txtlen = text.length;
 	if(txtlen > maxlength)
 	{
 		text = text.split(' ');
-	
+
 		strlen = 0; j = 0; str = [];
 		lastword = 0; i=0;
 		while (j < Math.ceil(txtlen/maxlength))

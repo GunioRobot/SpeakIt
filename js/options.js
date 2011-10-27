@@ -14,7 +14,7 @@
 		rateps = document.getElementById("rateps"),
 		pitch = document.getElementById("pitch"),
 		voice = document.getElementById("voice"),
-		bg = chrome.extension.getBackgroundPage(),	
+		bg = chrome.extension.getBackgroundPage(),
 		paypal = document.getElementById("paypal"),
 		donate = document.getElementById("donate"),
 		volume = document.getElementById("volume"),
@@ -25,7 +25,7 @@
 		enqueue = document.getElementById("enqueue"),
 		percents = document.getElementById("percents"),
 		speechinput = document.getElementById("speechinput");
-		
+
 /*
  * -----------------------------------------------------------------------------
  * Event listeners
@@ -35,7 +35,7 @@
 	{
 		toggle("contx_info");
 	});
-	
+
 	donate.addEventListener('click', function() // togle paypal info
 	{
 		toggle("paypalinfo");
@@ -59,7 +59,7 @@
 	paypal.addEventListener('click', function()
 	{
 		// redirect's to paypal donation page all donations are welcomed :) :)
-		chrome.tabs.create({url: 'http://goo.gl/zACwV'});		
+		chrome.tabs.create({url: 'http://goo.gl/zACwV'});
 	});
 
 	voice.addEventListener('change', function()
@@ -67,27 +67,27 @@
 		// Show additional options
 		if(this.value != 'SpeakIt!')
 		{
-			document.getElementById("moreoptions").style.display = 'block';				
+			document.getElementById("moreoptions").style.display = 'block';
 		}
 		else
 		{
-			document.getElementById("moreoptions").style.display = 'none';				
+			document.getElementById("moreoptions").style.display = 'none';
 		}
 	});
-	
+
 	voices.addEventListener('click', function()
 	{
 		// redirect's to Chrome Webstore for new TTS engines
-		chrome.tabs.create({url: 'http://goo.gl/dU9tB'});		
+		chrome.tabs.create({url: 'http://goo.gl/dU9tB'});
 	});
 
 	hotkeys.addEventListener("keydown", keyDown, false); // keyboard shortcuts
-	
+
 	volume.addEventListener('change', function() // display volume level
 	{
 		percents.innerHTML = parseInt(this.value)+' %';
 	}, false);
-	
+
 	rate.addEventListener('change', function() // display rate
 	{
 		rateps.innerHTML = 'x'+parseFloat(this.value).toFixed(2);
@@ -100,7 +100,7 @@
 */
 function checkLocalStorage()
 {
-	if (window.localStorage == null) 
+	if (window.localStorage == null)
 	{
 		alert("LocalStorage must be enabled for changing options.");
 		return false;
@@ -115,7 +115,7 @@ function checkLocalStorage()
 */
 function save_options()
 {
-	
+
 	if(!checkLocalStorage()) return;
 
 	localStorage.clear();
@@ -133,7 +133,7 @@ function save_options()
 		volume : parseFloat(volume.value/100)
 	}
 	localStorage.setItem("options", JSON.stringify(options));
-	
+
 	bg.setVolume(parseFloat(volume.value/100));
 	var tip = document.getElementById('tip');
 	tip.style.display = "block";
@@ -155,7 +155,7 @@ function restore_options()
 	hotkey_value = getHotkeys(options.hotkeys);
 	hotkeys.value = hotkey_value;
 	hotkey = options.hotkeys;
-	
+
 	rate.value = options.rate;
 	pitch.value = options.pitch;
 	volume.value = parseInt(options.volume*100);
@@ -174,7 +174,7 @@ function restore_options()
 */
 function getHotkeys(keys)
 {
-	return keys.substr(0,keys.lastIndexOf('+')+2)+CharCode(keys.substr(keys.lastIndexOf('+')+2,2));	
+	return keys.substr(0,keys.lastIndexOf('+')+2)+CharCode(keys.substr(keys.lastIndexOf('+')+2,2));
 }
 
 /*
@@ -184,7 +184,7 @@ function getHotkeys(keys)
 */
 function CharCode(code)
 {
-	return String.fromCharCode(code).toLowerCase();		
+	return String.fromCharCode(code).toLowerCase();
 }
 
 /*
@@ -231,11 +231,11 @@ function setLocales()
 {
 	locales = document.getElementsByClassName('locale');
 	locales = Array.prototype.slice.call(locales);
-	
+
 	for(i=0;locales.length;i++)
 	{
 		if(locales[i] === undefined) break; //Fix 4 Uncaught error
-		locales[i].innerHTML = chrome.i18n.getMessage(locales[i].id);		
+		locales[i].innerHTML = chrome.i18n.getMessage(locales[i].id);
 	}
 }
 
@@ -255,7 +255,7 @@ function getVoices()
 		{
 			var opt = document.createElement('option');
 			var name = voiceArray[i].voiceName;
-			
+
 			if (name == options.voice)
 			{
 				opt.setAttribute('selected', '');
@@ -266,7 +266,7 @@ function getVoices()
 		}
 		if(options.voice != 'SpeakIt!')
 		{
-			document.getElementById("moreoptions").style.display = 'block';	
+			document.getElementById("moreoptions").style.display = 'block';
 		}
 	});
 }

@@ -6,29 +6,29 @@
 	"description": "__MSG_desc__",
 	"background_page": "speakit.html",
 	"options_page": "options.html",
-	"icons": 
-	{ 
+	"icons":
+	{
 		"16": "small_icon.png",
 		"128": "images/icon.png"
 	},
-	
-	"browser_action": 
+
+	"browser_action":
 	{
 		"default_title": "__MSG_title__",
 		"default_icon": "small_icon.png",
-		"default_popup": "popup.html" 
+		"default_popup": "popup.html"
 	},
-	
-	"permissions": 
+
+	"permissions":
 	[
 		"<all_urls>",
 		"contextMenus",
 		"ttsEngine",
-		"tts", 
+		"tts",
 		"tabs",
 		"https://*/*"
 	],
-	
+
 	"tts_engine":
 	{
 		"voices":
@@ -41,11 +41,11 @@
 			}
 		]
 	},
-	
-	"content_scripts": 
+
+	"content_scripts":
 	[
 		{
-			"matches": ["<all_urls>", "https://*/*"], 
+			"matches": ["<all_urls>", "https://*/*"],
 			"js": ["js/addSpeech.js"],
 			"all_frames": true,
 			"run_at": "document_end"

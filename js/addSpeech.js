@@ -21,7 +21,7 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response)
 		shift = /shift/.test(options.hotkeys),
 		alt = /alt/.test(options.hotkeys),
 		code = options.hotkeys.substr(options.hotkeys.lastIndexOf('+') + 2);
-	
+
 	document.addEventListener("keydown", function (e)
 	{
 		if(e.keyCode == code && e.ctrlKey == ctrl && e.shiftKey == shift && e.altKey == alt)
@@ -32,7 +32,7 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response)
 			return false;
 		}
 	}, false);
-		
+
 	if(options.speechinput)
 	{
 		addSpeech();

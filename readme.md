@@ -4,7 +4,7 @@
 
 ### About extension
 
-SpeakIt reads selected text using Google TTS (Text-to-Speech) with language auto-detection. It supports all languages supported by Google except Bulgarian, Japanese and Arabic. 
+SpeakIt reads selected text using Google TTS (Text-to-Speech) with language auto-detection. It supports all languages supported by Google except Bulgarian, Japanese and Arabic.
 
 ![Speakit 0.2.1 alpha](https://github.com/skechboy/SpeakIt/blob/master/gallery/speakit_1.jpg?raw=true)
 ![SpeakIt 0.2.1 alpha](https://github.com/skechboy/SpeakIt/blob/master/gallery/speakit_2.jpg?raw=true)
